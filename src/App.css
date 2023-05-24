@@ -1,8 +1,27 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+}
+
+.drop-down {
+  position: absolute;
+  top: 0px;
+  padding: 1.5em;
+  background-color: black;
+}
+
+.lift-box {
+  width: 200px;
+  height: 200px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.lifts {
+  display: grid;
+  grid-template: "lift-box" "lift-box"
 }
 
 .logo {

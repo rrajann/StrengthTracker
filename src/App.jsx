@@ -3,14 +3,13 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { flushSync } from 'react-dom';
+import { useEffect } from 'react';
 
 export default function App() {
 
-  const [lift, setLift] = useState({ name: "", logs: [{weight: "", reps: "", date:""}]});
   const [list, setList] = useState([]);
-  const [log, setLog] = useState({weight: "", reps: "", date:""});
-  // const log = lift.logs[logID];
-  console.log(log);
+  const [lift, setLift] = useState({ name: "", logs: [{ weight: "", reps: "", date: "", time: "", complete: false }]});
+
 
   function submitLift(e) {
     e.preventDefault();
@@ -19,36 +18,56 @@ export default function App() {
       return alert("Lift has already been logged. You can edit the lift within the lift box.");
     }
 
-    console.log(log);
-    setLift((currLift) => {return {...currLift, logs: [log]}});
-    console.log(lift);
     setList(
       (currList) => {return [...currList, lift]}
     )
+    
+    setLift({ name: "", logs: [{ weight: "", reps: "", date: "", time: "", complete: false }]});
+}
+
+  function updateLift(e, lift, w, r, d, t) {
+    e.preventDefault();
+
+    setList(prevList => {
+      let modifyLiftIndex = prevList.findIndex(l => l.name === lift.name);
+      let modifyLift = prevList[modifyLiftIndex];
+      modifyLift.logs[modifyLift.logs.length - 1] = {weight: w, reps: r, date: d, time: t, complete: true};
+      return prevList.toSpliced(modifyLiftIndex, 1, modifyLift);    // adds modified lift back into list
+    })
     console.log(list);
-    setLift({ name: "", complete: false, logs: [log]});
   }
 
-  function mutateLogWeight(val) {
-    return {...log, weight: val}
+  function addLog(e, lift) {
+    e.preventDefault();
+    console.log('hi');
+
+    setList(prevList => {
+      // let modifyLift = prevList.find(l => l.name === lift.name);
+      // modifyLift.logs = [...modifyLift.logs, { weight: "", reps: "", date: "", time: "", complete: false }];
+      // return prevList;
+      let modifyLog = {weight: "", reps: "", date: "", time: "", complete: false};
+
+      let modifyLiftIndex = prevList.findIndex(l => l.name === lift.name);
+      let modifyLift = prevList[modifyLiftIndex];
+
+      const logExists = modifyLift.logs.some((log) =>
+        log.weight === modifyLog.weight &&
+        log.reps === modifyLog.reps &&
+        log.date === modifyLog.date &&
+        log.time === modifyLog.time &&
+        log.complete === modifyLog.complete);
+
+      if (!logExists) {
+        modifyLift.logs = [...modifyLift.logs, modifyLog];
+      }
+
+      let updatedLift = [...prevList]
+      updatedLift[modifyLiftIndex] = modifyLift
+      return updatedLift;
+      return prevList.toSpliced(modifyLiftIndex, 1, modifyLift);    // adds modified lift back into list
+    })
+    console.log(list);
   }
-
-  // function mutateLift(l, change) {
-  //   const lift = list.findIndex(el => el.name === l.name);
-  //   setList((currList) => {
-  //     return currList.toSpliced(lift, 1, change(l));
-  //   })
-  // }
-
-  // function mutateLiftName(l, newName) {
-  //   mutateLift(l, el => {return {...el, name: newName}});
-  // }
-
-  // function updateLift(e, l) {
-  //   e.preventDefault();
-  //   mutateLift(l, el => {return {...el, logs:[log], complete: true}})
-  //   console.log(list);
-  // }
 
   return (
     <>
@@ -62,12 +81,6 @@ export default function App() {
     <form onSubmit={submitLift} className="submission"> 
       <label htmlFor="lift-name"> Lift: </label>
       <input value={lift.name} onChange={e => setLift(prev => {return {...prev, name: e.target.value}})} type="type" id="lift-name"></input>
-      <label htmlFor="lift-weight"> Weight: </label>
-      <input value={log.weight} onChange={e => setLog(prev => {return {...prev, weight: e.target.value}})} min="0" type="number" id="lift-weight"></input>
-      <label htmlFor="lift-reps"> Reps: </label>
-      <input value={log.reps} onChange={e => setLog(prev => {return {...prev, reps: e.target.value}})} min="0" type="number" id="lift-reps"></input>
-      <label htmlFor="lift-date"> Date: </label>
-      <input value={log.date} onChange={e => setLog(prev => {return {...prev, date: e.target.value}})} type="date" id="lift-date"></input>
       <button className="btn">New Lift</button>
     </form>
 
@@ -75,17 +88,37 @@ export default function App() {
       {list.map(l => {
         return (
           <div className="lift-box">
-            {l.name}
+            <h1>{l.name}</h1>
             {l.logs.map(el => {
+              if (!el.complete) {
+                let weight, reps, date, time;
+                return (
+                  <form className="lift-newlog" onSubmit={e => updateLift(e, l, weight, reps, date, time)}>
+                    <label htmlFor="lift-weight"> Weight: </label>
+                    <input onChange={e => weight = e.target.value} min="0" type="number" id="lift-weight"></input>
+                    <label htmlFor="lift-reps"> Reps: </label>
+                    <input onChange={e => reps = e.target.value} min="0" type="number" id="lift-reps"></input>
+                    <label htmlFor="lift-date"> Date: </label>
+                    <input onChange={e => date = e.target.valuee} type="date" id="lift-date"></input>
+                    <label htmlFor="lift-time"> Time: </label>
+                    <input onChange={e => time = e.target.value} type="time" id="lift-time"></input>
+                    <button className="btn">Submit</button>
+                  </form>
+                  )
+                }
               return (
-                <div className="lift-info">
+                <form className="lift-info" onSubmit={e => addLog(e, l)}>
                   <p><span>Weight:</span> {el.weight}</p>
                   <p><span>Reps:</span> {el.reps}</p>
                   <p><span>Date:</span> {el.date}</p>
-                </div>
+                  {el.time}
+                  <button className="btn">+</button>
+                </form>
               )
-            })}
-          </div>)
+              }
+            )
+            }
+      </div>)
       }
       )
     }
