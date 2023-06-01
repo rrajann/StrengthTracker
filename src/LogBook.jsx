@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import CompleteLog from "./CompleteLog";
 import IncompleteLog from "./IncompleteLog";
+import LiftGraph from "./LiftGraph";
 
 export default function LogBook({ list , setList}) {
 
@@ -50,6 +52,7 @@ export default function LogBook({ list , setList}) {
                         }
                         return <CompleteLog l={l} el={el} addLogHelper={addLog}/>
                     })}
+                    <LiftGraph logs={l.logs}/>
                 </div>
                 )
             })}

@@ -1,28 +1,69 @@
 #root {
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+  width: 80%
 }
 
-.drop-down {
-  position: absolute;
-  top: 0px;
-  padding: 1.5em;
-  background-color: black;
+.submission {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+}
+
+/* Set up grid display for lift boxes */
+.lifts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+  gap: 20px; /* Adjust the gap between lift boxes as needed */
 }
 
 .lift-box {
-  width: 200px;
-  height: 200px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #f1f1f1;
   padding: 20px;
+  border-radius: 5px;
 }
 
-.lifts {
-  display: grid;
-  grid-template: "lift-box" "lift-box"
+.lift-info {
+  margin-bottom: 10px;
 }
+
+.lift-newlog {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+/* Style the form elements */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"] {
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+/* .btn {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+} */
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.lift-info p {
+  margin: 0;
+}
+
+.lift-info span {
+  font-weight: bold;
+}
+
 
 .logo {
   height: 6em;
