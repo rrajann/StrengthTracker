@@ -30,8 +30,6 @@ export default function App() {
     <>
       <div className="drop-down">
         Strength
-        <img src="./vite.svg"></img>
-        <a href="https://github.com/rrajann">About Us</a>
       </div>
       <InsertLift submitLiftToList={submitLiftToList}/>
       <LogBook list={list} setList={setList}/>
