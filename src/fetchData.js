@@ -1,7 +1,9 @@
+
+
 export const options = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '714f847491mshca6fec916ab199ap17924bjsnd87476783224',
+		'X-RapidAPI-Key': import.meta.env.VITE_REACT_API_KEY,
 		'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
 	}
 };
