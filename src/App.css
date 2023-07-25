@@ -21,6 +21,7 @@
 
 .submission {
   margin: 20px auto;
+  height: 25%;
   width: 50%;
   text-align: center;
 }
@@ -77,6 +78,17 @@ input[type="time"] {
 
 .lift-info span {
   font-weight: bold;
+}
+
+span {
+  font-weight: bold;
+}
+
+.button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 

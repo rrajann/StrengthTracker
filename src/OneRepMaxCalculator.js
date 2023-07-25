@@ -5,7 +5,7 @@ export default function orp(w, r) {
     parseInt(w);
     parseInt(r);
 
-    if (r == 0) {
+    if (r == 0 || r == 1) {
         return w;
     }
     if (w == 0) {

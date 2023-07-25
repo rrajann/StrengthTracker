@@ -33,7 +33,6 @@ export default function App() {
       </div>
       <InsertLift submitLiftToList={submitLiftToList}/>
       <LogBook list={list} setList={setList}/>
-    </>
-    
+    </> 
   )
 }

@@ -20,7 +20,7 @@ export default function LogBook({ list , setList}) {
       
             let modifyLiftIndex = prevList.findIndex(l => l.name === lift.name);
             let modifyLift = prevList[modifyLiftIndex];
-      
+
             const logExists = modifyLift.logs.some((log) =>
               log.weight === modifyLog.weight &&
               log.reps === modifyLog.reps &&
@@ -52,7 +52,8 @@ export default function LogBook({ list , setList}) {
                         }
                         return <CompleteLog l={l} el={el} addLogHelper={addLog}/>
                     })}
-                    <LiftGraph logs={l.logs}/>
+                    <LiftGraph logs={l.logs.filter(l => {return l.complete})}/>
+                    <button onClick={() => addLog({name: l.name, weight: "", reps: "", date: "", time: "", complete: false})}>Add Lift</button>
                 </div>
                 )
             })}
